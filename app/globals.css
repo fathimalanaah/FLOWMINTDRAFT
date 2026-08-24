@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Flow Mint design tokens — palette "Mint on Ink".
+   Mint is the signal colour: it marks the one thing that is moving or live.
+   Sand carries the editorial voice. Everything else stays quiet.
+--------------------------------------------------------------------------- */
+
+@theme {
+  --color-ink: #080b0a;
+  --color-surface: #101614;
+  --color-line: #1e2a26;
+  --color-line-strong: #2c3d37;
+  --color-fg: #e8f0ec;
+  --color-muted: #8fa39b;
+  --color-mint: #3be0a0;
+  --color-mint-deep: #12a374;
+  --color-sand: #e4d5b7;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --text-display: clamp(2.75rem, 7.2vw, 6.75rem);
+  --text-title: clamp(1.85rem, 3.4vw, 3rem);
+  --text-body: 1.0625rem;
+  --text-label: 0.75rem;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-mint);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-mint);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  /* Small tracked mono label. Used for anything technical: prices, tools, stages. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  /* The editorial aside. Sand, never mint — mint is reserved for live signal. */
+  .aside-note {
+    color: var(--color-sand);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
+  }
+
+  /* The conduit: a machined channel with mint travelling inside it.
+     Used as the page spine and as a section rule. Not decoration —
+     its fill level reports scroll progress. */
+  .channel {
+    position: relative;
+    background: var(--color-surface);
+    border-block: 1px solid var(--color-line);
+    overflow: hidden;
+  }
+
+  .channel-fill {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    background: var(--color-mint);
+    transform-origin: left center;
+  }
+}
+
+/* Motion is opt-out, and the opt-out is complete: the 3D scene is replaced by
+   its still, and every transition collapses to a plain state change. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
