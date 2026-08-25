@@ -37,12 +37,18 @@ export default function ScrollWorld() {
       // wordmarks and two navs stacked on each other. Journey position is still
       // legible from the route rail, the NN / 02 counter and each section eyebrow.
       //
-      // Cut from four scenes to two. Route and Agent described the same things as
-      // the services list that now sits above this section, so they were a slower
-      // restatement of copy the visitor had already read. Intake is the sharpest
-      // hook and Handoff is the strongest differentiator, so those are what stayed.
-      diveScroll: 1.0,
-      connScroll: 0.7,
+      // Three scenes, not the original four. Route (the clinic) was the one that
+      // genuinely restated the services list above, so it stayed cut. Intake is
+      // the sharpest hook, Logistics carries the warehouse flight and the real
+      // connector, and Handoff is the strongest differentiator and holds the CTA.
+      //
+      // Scroll distance per clip is what makes the camera read as flying rather
+      // than snapping. At 0.9 an eight-second clip burned through in about eight
+      // wheel notches, which is why the motion stopped being perceptible. Back to
+      // ~1.4, close to the original 1.5, while the whole section is still around
+      // five viewports instead of the original 8.4.
+      diveScroll: 1.3,
+      connScroll: 0.85,
       hint: "scroll to fly in",
       nav: false,
       atmosphere: false, // the clips carry the atmosphere; particles would fight them
@@ -57,8 +63,21 @@ export default function ScrollWorld() {
           title: "The message that arrives at 11pm.",
           body: "A customer asks what you charge. The assistant answers, in Arabic or English, and the lead is in your CRM before you wake up.",
           tags: ["WhatsApp", "Always on"],
-          scroll: 0.9,
-          linger: 0.35,
+          scroll: 1.4,
+          linger: 0.4,
+        },
+        {
+          id: "logistics",
+          label: "Logistics",
+          still: "/world/03-warehouse.webp",
+          clip: clip("/world/dive-03.mp4"),
+          accent: "#3BE0A0",
+          eyebrow: "Logistics",
+          title: "The invoice nobody retypes.",
+          body: "Delivery notes and invoices get read, checked against the order, and queued for approval. Nobody keys them in twice.",
+          tags: ["Documents", "Checks"],
+          scroll: 1.35,
+          linger: 0.4,
         },
         {
           id: "handoff",
@@ -70,19 +89,26 @@ export default function ScrollWorld() {
           title: "Everything lands where you already work.",
           body: "Your CRM, your inbox, your sheet. No new app to learn, and if you stop working with me all of it keeps running.",
           tags: ["Your accounts", "No lock-in"],
-          scroll: 0.9,
-          linger: 0.35,
+          scroll: 1.45,
+          linger: 0.4,
           cta: {
             primary: { label: "Book a 20-minute audit", href: "/book" },
             secondary: { label: "WhatsApp us", href: "https://wa.me/971585620044" },
           },
         },
       ],
-      // One connector between the two remaining scenes. conn-03 is the clip that
-      // originally ran warehouse to office; with Route and Agent removed the
-      // shop to office jump has no rendered connector, so the two dives simply
-      // cross-dissolve, which the engine supports by passing a falsy entry.
-      connectors: [null],
+      // Connectors are the fly-out-of-one-building-and-into-the-next motion, so
+      // dropping them removed exactly the "moves in and out" quality this section
+      // is for. They are restored, but only where the endpoints genuinely match:
+      //
+      // [0] shop to warehouse: no such clip was ever rendered (conn-01 flies to
+      //     the clinic, which is no longer in the chain), so a falsy entry makes
+      //     the engine cross-dissolve the two dives instead. Using conn-01 here
+      //     would fly the camera into a building that never appears.
+      // [1] warehouse to office: conn-03 is exactly this flight, and its first
+      //     and last frames are the neighbouring dives' real frames, so the seam
+      //     is invisible.
+      connectors: [null, clip("/world/conn-03.mp4")],
     };
 
     const mount = () => {
