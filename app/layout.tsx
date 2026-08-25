@@ -27,19 +27,41 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const description =
+  "I build WhatsApp assistants, lead routing and invoice processing for Dubai SMEs. Fixed prices published up front, built in your own accounts, yours to keep.";
+
 export const metadata: Metadata = {
+  // Makes every relative URL below absolute, which is what OG scrapers need.
+  metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — AI automation for Dubai businesses`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} · AI automation for Dubai businesses`,
+    template: `%s · ${site.name}`,
   },
-  description:
-    "Flow Mint builds the automations that pay for themselves — workflows, AI agents and WhatsApp assistants for Dubai SMEs. Starting prices published, not quoted.",
+  description,
+  alternates: { canonical: "/" },
   openGraph: {
-    title: `${site.name} — AI automation for Dubai businesses`,
-    description:
-      "Workflows, AI agents and WhatsApp assistants for Dubai SMEs. Starting prices published, not quoted.",
+    title: `${site.name} · AI automation for Dubai businesses`,
+    description,
+    url: "/",
+    siteName: site.name,
     locale: "en_AE",
     type: "website",
+    // Without this every link pasted into WhatsApp, LinkedIn or Slack renders
+    // as a bare grey rectangle.
+    images: [
+      {
+        url: "/art/og-base.webp",
+        width: 2752,
+        height: 1536,
+        alt: `${site.name} · AI automation for Dubai businesses`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.name} · AI automation for Dubai businesses`,
+    description,
+    images: ["/art/og-base.webp"],
   },
 };
 

@@ -3,12 +3,33 @@
 
 export const site = {
   name: "Flow Mint",
-  tagline: "Automations that pay for themselves",
+  tagline: "Your customers message at 11pm. Nobody answers until 9am.",
   city: "Dubai",
   email: "flowmint@gmail.com",
   phoneDisplay: "+971 58 562 0044",
   phoneLink: "+971585620044",
   whatsapp: "https://wa.me/971585620044",
+  // TODO(domain): swap to the custom domain once DNS is live. See DOMAIN-SETUP.md.
+  // Everything below this line reads from here, so it is a one-line change.
+  url: "https://flowmintdraft.vercel.app",
+  founder: {
+    name: "Fathima Lanaah",
+    role: "Founder",
+    // TODO(photo): drop a square headshot at public/art/founder.webp, then set
+    // this to "/art/founder.webp". Until it is a real path the About page
+    // renders initials, which beats a broken image or a stock photo of someone
+    // who is not you.
+    photo: null as string | null,
+  },
+  /** One meeting type, named for what the visitor leaves with. */
+  booking: {
+    // TODO(booking): replace with your real Calendly link, e.g.
+    // "https://calendly.com/flowmint/audit". Until then /book shows setup
+    // instructions rather than a broken embed.
+    calendly: "",
+    label: "Book a 20-minute audit",
+    duration: "20 minutes",
+  },
 } as const;
 
 export const mailto = `mailto:${site.email}`;
@@ -19,7 +40,7 @@ export const stages = [
   {
     key: "intake",
     name: "Intake",
-    line: "Work arrives — a form, an email, a WhatsApp message, a PDF — and gets read the same way every time.",
+    line: "Work arrives as a form, an email, a WhatsApp message or a PDF, and gets read the same way every time.",
   },
   {
     key: "route",
@@ -29,7 +50,7 @@ export const stages = [
   {
     key: "agent",
     name: "Agent",
-    line: "The judgement calls — drafting a reply, pulling the right price, checking a document — run on a model with your data behind it.",
+    line: "The judgement calls (drafting a reply, pulling the right price, checking a document) run on a model with your data behind it.",
   },
   {
     key: "handoff",
@@ -38,7 +59,18 @@ export const stages = [
   },
 ] as const;
 
-/** Starting prices, benchmarked against published Dubai/UAE market ranges (Aug 2026). */
+/**
+ * How packages relate to services: a service is a single thing I build, a
+ * package is how you buy one or several of them. Starter is exactly the
+ * "One workflow, one job" service. Growth bundles several services plus an
+ * agent. Embedded is not a build at all, it is ongoing capacity.
+ *
+ * `unit` carries the setup-versus-monthly distinction and the UI must render
+ * it prominently: AED 18,000 setup and AED 9,000 per month are not comparable
+ * numbers and a visitor scanning three cards will assume they are.
+ *
+ * Starting prices, benchmarked against published Dubai/UAE market ranges.
+ */
 export const packages = [
   {
     name: "Starter",
@@ -46,8 +78,8 @@ export const packages = [
     unit: "one-off",
     summary: "One workflow, fixed scope, running in your own accounts.",
     includes: [
-      "One workflow, scoped and priced before we start",
-      "Built in your accounts — n8n, Make, or your existing stack",
+      "One workflow, scoped and priced before I start",
+      "Built in your accounts: n8n, Make, or your existing stack",
       "Two rounds of changes after handover",
       "A written runbook so your team can maintain it",
     ],
@@ -62,7 +94,7 @@ export const packages = [
     summary: "Several workflows plus one AI agent, with someone on the hook when it breaks.",
     includes: [
       "Up to four connected workflows",
-      "One AI agent — support, sales, or internal",
+      "One AI agent: support, sales, or internal",
       "CRM and WhatsApp Business integration",
       "Monthly review, changes, and monitoring",
     ],
@@ -73,9 +105,9 @@ export const packages = [
     name: "Embedded",
     price: "AED 9,000",
     unit: "per month",
-    summary: "We keep building. New automations every month, and we own the maintenance.",
+    summary: "I keep building. New automations every month, and I own the maintenance.",
     includes: [
-      "Continuous build — new automations as they are needed",
+      "Continuous build: new automations as they are needed",
       "All existing workflows maintained and monitored",
       "Priority response",
       "Quarterly review of what to automate next",
@@ -86,6 +118,16 @@ export const packages = [
 ] as const;
 
 export const services = [
+  {
+    slug: "single-workflow",
+    name: "One workflow, one job",
+    from: "AED 6,000",
+    what: "A single repetitive task, automated end to end. The cheapest way to find out whether this works for you.",
+    running:
+      "Every form submission lands in your CRM with the fields filled in. Or every new order sends the customer a confirmation on WhatsApp. One trigger, one outcome, no AI agent in the middle.",
+    tools: ["n8n or Make", "one system you already use"],
+    timeline: "About a week",
+  },
   {
     slug: "whatsapp",
     name: "WhatsApp AI assistant",

@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { site, packages, services, priceFactors } from "@/lib/site";
 import Reveal from "@/components/Reveal";
+import BookCta from "@/components/BookCta";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Flow Mint publishes starting prices in AED for AI automation in Dubai — packages from AED 6,000, retainers from AED 3,500/month, and an honest list of what changes the number.",
+    "Flow Mint publishes starting prices in AED for AI automation in Dubai. Packages from AED 6,000, retainers from AED 3,500/month, and an honest list of what changes the number.",
+  alternates: { canonical: "/pricing" },
 };
 
 export default function PricingPage() {
@@ -20,8 +22,12 @@ export default function PricingPage() {
           </h1>
           <p className="mt-6 max-w-xl text-muted">
             These are starting prices in AED, not quotes. They reflect what automation work actually
-            costs in the UAE market. If your job is simpler than the description, it costs less; if
-            it is more tangled, we say so before we start, not after.
+            costs in the UAE market. If your job is simpler than the description it costs less. If
+            it&rsquo;s more tangled, I say so before I start, not after.
+          </p>
+          <p className="mt-4 max-w-xl text-[0.9375rem] text-muted">
+            A service is one thing I build. A package is how you buy one or several of them. Starter is
+            exactly the &ldquo;one workflow, one job&rdquo; service.
           </p>
         </div>
       </section>
@@ -44,10 +50,15 @@ export default function PricingPage() {
                 </div>
 
                 <p className="mt-6 font-mono text-[2.25rem] leading-none text-fg">{tier.price}</p>
-                <p className="mt-2 font-mono text-[0.8125rem] text-muted">
+                {/* The unit is load-bearing: AED 18,000 setup and AED 9,000 per
+                    month aren't comparable numbers, and a visitor scanning three
+                    cards will assume they are unless this is loud. */}
+                <p className="mt-3 inline-flex w-fit border border-line-strong px-2.5 py-1 font-mono text-[0.75rem] tracking-[0.12em] uppercase text-sand">
                   {tier.unit}
-                  {tier.retainer ? ` · then ${tier.retainer}` : ""}
                 </p>
+                {tier.retainer ? (
+                  <p className="mt-2 font-mono text-[0.8125rem] text-muted">then {tier.retainer}</p>
+                ) : null}
 
                 <p className="mt-6 text-[0.9375rem] text-muted">{tier.summary}</p>
 
@@ -78,14 +89,9 @@ export default function PricingPage() {
                   </ul>
                 </div>
 
-                <a
-                  href={site.whatsapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-8 border border-line-strong px-5 py-3 text-center font-mono text-[0.75rem] tracking-[0.12em] uppercase transition-colors hover:border-mint hover:text-mint"
-                >
-                  Ask about {tier.name}
-                </a>
+                <div className="mt-8">
+                  <BookCta label={`Book a call about ${tier.name}`} className="w-full justify-center" />
+                </div>
               </div>
             ))}
           </Reveal>
@@ -154,7 +160,7 @@ export default function PricingPage() {
             <h2 className="mt-4 text-[length:var(--text-title)]">What changes the price.</h2>
             <p className="aside-note mt-6 max-w-md">
               Four things move a quote, and none of them are a surprise if we look at your setup
-              first. That look is free and takes about half an hour.
+              first. That look is free and takes about twenty minutes.
             </p>
           </div>
 
@@ -172,23 +178,18 @@ export default function PricingPage() {
       <section className="border-t border-line py-20">
         <div className="shell">
           <h2 className="max-w-2xl text-[length:var(--text-title)]">
-            Not sure which one fits? Describe the task and we will tell you.
+            Not sure which one fits? Describe the task and I&rsquo;ll tell you.
           </h2>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <BookCta />
             <a
               href={site.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-mint px-6 py-3 font-mono text-[0.8125rem] tracking-[0.12em] uppercase text-ink transition-colors hover:bg-fg"
+              className="inline-flex min-h-11 items-center border border-line-strong px-6 font-mono text-[0.8125rem] tracking-[0.12em] uppercase text-fg transition-colors hover:border-mint hover:text-mint"
             >
-              Message us on WhatsApp
+              Message on WhatsApp
             </a>
-            <Link
-              href="/contact"
-              className="border border-line-strong px-6 py-3 font-mono text-[0.8125rem] tracking-[0.12em] uppercase transition-colors hover:border-mint hover:text-mint"
-            >
-              Send a message
-            </Link>
           </div>
         </div>
       </section>

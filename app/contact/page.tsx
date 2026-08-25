@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { site, mailto, tel } from "@/lib/site";
 import ContactForm from "@/components/ContactForm";
+import BookCta from "@/components/BookCta";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Talk to Flow Mint about automating a task in your business. WhatsApp ${site.phoneDisplay} or email ${site.email}.`,
+  description: `Talk to Flow Mint about automating a task in your business. Book a call, WhatsApp ${site.phoneDisplay}, or email ${site.email}.`,
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
@@ -14,12 +16,16 @@ export default function ContactPage() {
         <div>
           <p className="label">Contact</p>
           <h1 className="mt-5 text-[length:var(--text-title)]">
-            WhatsApp is fastest. The form works too.
+            Book a call, or just message me.
           </h1>
           <p className="mt-6 max-w-md text-muted">
-            Tell us the task that keeps not getting done. If automation is the wrong answer, we will
-            say so — that reply is free and takes about a day.
+            Tell me the task that keeps not getting done. If automation is the wrong answer I&rsquo;ll
+            say so. That reply is free and takes about a day.
           </p>
+
+          <div className="mt-8">
+            <BookCta />
+          </div>
 
           <div className="mt-12 space-y-px border border-line bg-line">
             <a
@@ -56,7 +62,7 @@ export default function ContactPage() {
           </div>
 
           <p className="aside-note mt-8 max-w-md">
-            Based in {site.city}. We work with businesses across the UAE, in Arabic and English.
+            Based in {site.city}. I work with businesses across the UAE, in Arabic and English.
           </p>
         </div>
 

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site, services } from "@/lib/site";
+import BookCta from "@/components/BookCta";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "WhatsApp AI assistants, lead routing, document processing, custom AI agents and ongoing support for Dubai businesses — each with a published starting price.",
+    "WhatsApp AI assistants, lead routing, document processing, custom AI agents and ongoing support for Dubai businesses, each with a published starting price.",
+  alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {
@@ -15,11 +17,11 @@ export default function ServicesPage() {
         <div className="shell">
           <p className="label">Services</p>
           <h1 className="mt-5 max-w-3xl text-[length:var(--text-title)]">
-            Five things we build, and what each one looks like when it is running.
+            Six things I build, and what each one looks like when it&rsquo;s running.
           </h1>
           <p className="mt-6 max-w-xl text-muted">
             Everything below runs in your own accounts on tools you can keep. Prices are starting
-            prices — see{" "}
+            prices. See{" "}
             <Link href="/pricing" className="text-mint underline underline-offset-4">
               what changes them
             </Link>
@@ -68,14 +70,17 @@ export default function ServicesPage() {
             <div className="border-l border-line pl-8 lg:pl-12">
               <p className="label">What it looks like in practice</p>
               <p className="mt-4 max-w-lg text-[1.0625rem] text-fg">{service.running}</p>
-              <a
-                href={site.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-8 inline-block border border-line-strong px-5 py-3 font-mono text-[0.75rem] tracking-[0.12em] uppercase transition-colors hover:border-mint hover:text-mint"
-              >
-                Ask about this
-              </a>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <BookCta label="Book a call about this" />
+                <a
+                  href={site.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center border border-line-strong px-5 font-mono text-[0.75rem] tracking-[0.12em] uppercase text-fg transition-colors hover:border-mint hover:text-mint"
+                >
+                  Ask on WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         </section>

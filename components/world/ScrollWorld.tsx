@@ -24,13 +24,25 @@ export default function ScrollWorld() {
   useEffect(() => {
     if (mounted.current || !host.current) return;
 
+    // Phones get the stills and no video at all. Seven clips came to 31.5MB on
+    // a mobile connection, which is a real cost to a real visitor for
+    // decoration. Below 860px the engine cross-dissolves the posters instead,
+    // which reads fine and costs about 200KB.
+    const smallScreen = window.matchMedia("(max-width: 860px)").matches;
+    const clip = (src: string) => (smallScreen ? undefined : src);
+
     const config = {
       // No brand mark and no section nav from the engine: the site header already
       // provides both, and rendering the engine's on top produced two Flow Mint
       // wordmarks and two navs stacked on each other. Journey position is still
-      // legible from the route rail, the NN / 04 counter and each section eyebrow.
-      diveScroll: 1.3,
-      connScroll: 0.9,
+      // legible from the route rail, the NN / 02 counter and each section eyebrow.
+      //
+      // Cut from four scenes to two. Route and Agent described the same things as
+      // the services list that now sits above this section, so they were a slower
+      // restatement of copy the visitor had already read. Intake is the sharpest
+      // hook and Handoff is the strongest differentiator, so those are what stayed.
+      diveScroll: 1.0,
+      connScroll: 0.7,
       hint: "scroll to fly in",
       nav: false,
       atmosphere: false, // the clips carry the atmosphere; particles would fight them
@@ -39,56 +51,38 @@ export default function ScrollWorld() {
           id: "intake",
           label: "Intake",
           still: "/world/01-shop.webp",
-          clip: "/world/dive-01.mp4",
+          clip: clip("/world/dive-01.mp4"),
           accent: "#3BE0A0",
           eyebrow: "Intake",
           title: "The message that arrives at 11pm.",
-          body: "A customer asks what you charge. The assistant answers — in Arabic or English — and the lead is in your CRM before you wake up.",
+          body: "A customer asks what you charge. The assistant answers, in Arabic or English, and the lead is in your CRM before you wake up.",
           tags: ["WhatsApp", "Always on"],
-          scroll: 1.5,
-          linger: 0.4,
-        },
-        {
-          id: "route",
-          label: "Route",
-          still: "/world/02-clinic.webp",
-          clip: "/world/dive-02.mp4",
-          accent: "#3BE0A0",
-          eyebrow: "Route",
-          title: "The enquiry that finds the right desk.",
-          body: "Rules decide where each request goes. The urgent ones jump the queue. Nothing sits waiting for someone to notice it.",
-          tags: ["Routing", "Triage"],
-        },
-        {
-          id: "agent",
-          label: "Agent",
-          still: "/world/03-warehouse.webp",
-          clip: "/world/dive-03.mp4",
-          accent: "#3BE0A0",
-          eyebrow: "Agent",
-          title: "The invoice nobody retypes.",
-          body: "Documents get read, checked against the order, and queued for approval. The judgement calls run on a model with your data behind it.",
-          tags: ["Documents", "Checks"],
+          scroll: 0.9,
+          linger: 0.35,
         },
         {
           id: "handoff",
           label: "Handoff",
           still: "/world/04-office.webp",
-          clip: "/world/dive-04.mp4",
+          clip: clip("/world/dive-04.mp4"),
           accent: "#3BE0A0",
           eyebrow: "Handoff",
           title: "Everything lands where you already work.",
-          body: "Your CRM, your inbox, your sheet. No new app to learn — and if you stop working with us, all of it keeps running.",
+          body: "Your CRM, your inbox, your sheet. No new app to learn, and if you stop working with me all of it keeps running.",
           tags: ["Your accounts", "No lock-in"],
-          scroll: 1.6,
-          linger: 0.45,
+          scroll: 0.9,
+          linger: 0.35,
           cta: {
-            primary: { label: "See pricing", href: "/pricing" },
+            primary: { label: "Book a 20-minute audit", href: "/book" },
             secondary: { label: "WhatsApp us", href: "https://wa.me/971585620044" },
           },
         },
       ],
-      connectors: ["/world/conn-01.mp4", "/world/conn-02.mp4", "/world/conn-03.mp4"],
+      // One connector between the two remaining scenes. conn-03 is the clip that
+      // originally ran warehouse to office; with Route and Agent removed the
+      // shop to office jump has no rendered connector, so the two dives simply
+      // cross-dissolve, which the engine supports by passing a falsy entry.
+      connectors: [null],
     };
 
     const mount = () => {
@@ -110,19 +104,30 @@ export default function ScrollWorld() {
   }, []);
 
   return (
-    <div
-      ref={host}
-      className="sw-root"
-      style={
-        {
-          "--sw-bg": "#080B0A",
-          "--sw-ink": "#E8F0EC",
-          "--sw-ink-soft": "#8FA39B",
-          "--sw-accent": "#3BE0A0",
-          "--sw-font-display": "var(--font-bricolage), sans-serif",
-          "--sw-font-body": "var(--font-instrument), sans-serif",
-        } as React.CSSProperties
-      }
-    />
+    <div className="relative">
+      <div
+        ref={host}
+        className="sw-root"
+        style={
+          {
+            "--sw-bg": "#080B0A",
+            "--sw-ink": "#E8F0EC",
+            "--sw-ink-soft": "#8FA39B",
+            "--sw-accent": "#3BE0A0",
+            "--sw-font-display": "var(--font-bricolage), sans-serif",
+            "--sw-font-body": "var(--font-instrument), sans-serif",
+          } as React.CSSProperties
+        }
+      />
+      {/* Anyone who doesn't want the flight can leave it. Sits above the
+          engine's own fixed layers (z-40 on the route rail) and only while
+          the world is on screen, since it scrolls away with the container. */}
+      <a
+        href="#after-world"
+        className="pointer-events-auto absolute bottom-8 right-6 z-50 hidden font-mono text-[0.75rem] tracking-[0.12em] uppercase text-muted underline underline-offset-4 transition-colors hover:text-mint sm:inline-block"
+      >
+        Skip to pricing
+      </a>
+    </div>
   );
 }

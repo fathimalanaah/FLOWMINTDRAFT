@@ -10,13 +10,28 @@ export default function Footer() {
           <p className="mt-3 max-w-xs text-[0.9375rem] text-muted">
             AI automation for {site.city} businesses. Built in your accounts, priced in the open.
           </p>
+          <p className="mt-4 text-[0.9375rem] text-muted">
+            Run by{" "}
+            <Link href="/about" className="text-fg transition-colors hover:text-mint">
+              {site.founder.name}
+            </Link>
+            .
+          </p>
         </div>
 
         <div>
-          <p className="label">Talk to us</p>
+          <p className="label">Talk to me</p>
           {/* Targets are sized to 44px rather than spaced apart, so the tap area
               matches the visible row on touch. */}
           <ul className="mt-1 text-[0.9375rem]">
+            <li>
+              <Link
+                href="/book"
+                className="inline-flex min-h-11 items-center text-mint transition-colors hover:text-fg"
+              >
+                Book a call
+              </Link>
+            </li>
             <li>
               <a
                 href={site.whatsapp}
@@ -53,6 +68,7 @@ export default function Footer() {
               { href: "/services", label: "Services" },
               { href: "/pricing", label: "Pricing" },
               { href: "/about", label: "About" },
+              { href: "/book", label: "Book a call" },
               { href: "/contact", label: "Contact" },
             ].map((item) => (
               <li key={item.href}>
@@ -70,7 +86,7 @@ export default function Footer() {
         <div>
           <p className="label">Where the work lives</p>
           <p className="mt-3 text-[0.9375rem] text-muted">
-            Your accounts, your credentials, your data. If you stop working with us, everything keeps
+            Your accounts, your credentials, your data. If you stop working with me, everything keeps
             running.
           </p>
         </div>
