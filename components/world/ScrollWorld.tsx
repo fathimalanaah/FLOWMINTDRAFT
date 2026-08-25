@@ -42,13 +42,24 @@ export default function ScrollWorld() {
       // the sharpest hook, Logistics carries the warehouse flight and the real
       // connector, and Handoff is the strongest differentiator and holds the CTA.
       //
-      // Scroll distance per clip is what makes the camera read as flying rather
-      // than snapping. At 0.9 an eight-second clip burned through in about eight
-      // wheel notches, which is why the motion stopped being perceptible. Back to
-      // ~1.4, close to the original 1.5, while the whole section is still around
-      // five viewports instead of the original 8.4.
-      diveScroll: 1.3,
-      connScroll: 0.85,
+      // Two numbers control how the flight feels.
+      //
+      // `scroll` is distance: how much page travel one clip is spread across. Too
+      // little and the camera snaps rather than flies. At 0.9 an eight-second clip
+      // burned through in about eight wheel notches.
+      //
+      // `linger` is where that distance is spent. It is a monotone remap of
+      // scroll to time, so the camera covers the approach quickly and then settles
+      // once it is inside the building, which is the moment the copy lands. That
+      // dwell is what reads as "opening the shop and showing you inside" rather
+      // than flying past it. The engine caps useful values around 0.6.
+      //
+      // The world is long again, close to the original. That is affordable now in
+      // a way it was not before, because the services and process sections were
+      // moved above it: a visitor reaches this having already seen the offer, so
+      // the flight is a reward rather than a toll gate.
+      diveScroll: 1.5,
+      connScroll: 0.9,
       hint: "scroll to fly in",
       nav: false,
       atmosphere: false, // the clips carry the atmosphere; particles would fight them
@@ -63,8 +74,8 @@ export default function ScrollWorld() {
           title: "The message that arrives at 11pm.",
           body: "A customer asks what you charge. The assistant answers, in Arabic or English, and the lead is in your CRM before you wake up.",
           tags: ["WhatsApp", "Always on"],
-          scroll: 1.4,
-          linger: 0.4,
+          scroll: 1.65,
+          linger: 0.55,
         },
         {
           id: "logistics",
@@ -76,8 +87,8 @@ export default function ScrollWorld() {
           title: "The invoice nobody retypes.",
           body: "Delivery notes and invoices get read, checked against the order, and queued for approval. Nobody keys them in twice.",
           tags: ["Documents", "Checks"],
-          scroll: 1.35,
-          linger: 0.4,
+          scroll: 1.6,
+          linger: 0.55,
         },
         {
           id: "handoff",
@@ -89,8 +100,8 @@ export default function ScrollWorld() {
           title: "Everything lands where you already work.",
           body: "Your CRM, your inbox, your sheet. No new app to learn, and if you stop working with me all of it keeps running.",
           tags: ["Your accounts", "No lock-in"],
-          scroll: 1.45,
-          linger: 0.4,
+          scroll: 1.7,
+          linger: 0.55,
           cta: {
             primary: { label: "Book a 20-minute audit", href: "/book" },
             secondary: { label: "WhatsApp us", href: "https://wa.me/971585620044" },
