@@ -110,16 +110,16 @@ export default function ScrollWorld() {
       ],
       // Connectors are the fly-out-of-one-building-and-into-the-next motion, so
       // dropping them removed exactly the "moves in and out" quality this section
-      // is for. They are restored, but only where the endpoints genuinely match:
+      // is for. Both are real flights now, and both seam on actual frames:
       //
-      // [0] shop to warehouse: no such clip was ever rendered (conn-01 flies to
-      //     the clinic, which is no longer in the chain), so a falsy entry makes
-      //     the engine cross-dissolve the two dives instead. Using conn-01 here
-      //     would fly the camera into a building that never appears.
-      // [1] warehouse to office: conn-03 is exactly this flight, and its first
-      //     and last frames are the neighbouring dives' real frames, so the seam
-      //     is invisible.
-      connectors: [null, clip("/world/conn-03.mp4")],
+      // [0] shop to warehouse: no clip existed for this pair, because the original
+      //     chain went shop to clinic (conn-01) and the clinic is cut. This one was
+      //     generated against the two real endpoint frames, dive-01's last and
+      //     dive-03's first, so the camera retreats out of the shop, holds it as a
+      //     complete miniature in the void, then descends into the warehouse.
+      //     Measured seam accuracy 37.5dB and 36.0dB PSNR against those frames.
+      // [1] warehouse to office: conn-03, from the original render set.
+      connectors: [clip("/world/conn-shop-warehouse.mp4"), clip("/world/conn-03.mp4")],
     };
 
     const mount = () => {
